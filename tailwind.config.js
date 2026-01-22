@@ -51,11 +51,11 @@ module.exports = {
       borderWidth: {
         hairline: hairlineWidth(),
       },
-      fontFamily: {
-        poppins: [FontFamily.Poppins.Regular],
-        'poppins-medium': [FontFamily.Poppins.Medium],
-        'poppins-semibold': [FontFamily.Poppins.SemiBold],
-      },
+      // fontFamily: {
+      //   poppins: [FontFamily.Poppins.Regular],
+      //   'poppins-medium': [FontFamily.Poppins.Medium],
+      //   'poppins-semibold': [FontFamily.Poppins.SemiBold],
+      // },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },

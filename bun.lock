@@ -60,6 +60,7 @@
         "react-native-keyboard-controller": "^1.20.6",
         "react-native-mmkv": "^4.1.1",
         "react-native-nitro-modules": "^0.33.2",
+        "react-native-pager-view": "^8.0.0",
         "react-native-reanimated": "^4.2.1",
         "react-native-safe-area-context": "^5.6.2",
         "react-native-screens": "^4.20.0",
@@ -1719,6 +1720,8 @@
     "react-native-mmkv": ["react-native-mmkv@4.1.1", "", { "peerDependencies": { "react": "*", "react-native": "*", "react-native-nitro-modules": "*" } }, "sha512-nYFjM27l7zVhIiyAqWEFRagGASecb13JMIlzAuOeakRRz9GMJ49hCQntUBE2aeuZRE4u4ehSqTOomB0mTF56Ew=="],
 
     "react-native-nitro-modules": ["react-native-nitro-modules@0.33.2", "", { "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-ZlfOe6abODeHv/eZf8PxeSkrxIUhEKha6jaAAA9oXy7I6VPr7Ff4dUsAq3cyF3kX0L6qt2Dh9nzD2NdSsDwGpA=="],
+
+    "react-native-pager-view": ["react-native-pager-view@8.0.0", "", { "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-oAwlWT1lhTkIs9HhODnjNNl/owxzn9DP1MbP+az6OTUdgbmzA16Up83sBH8NRKwrH8rNm7iuWnX1qMqiiWOLhg=="],
 
     "react-native-reanimated": ["react-native-reanimated@4.2.1", "", { "dependencies": { "react-native-is-edge-to-edge": "1.2.1", "semver": "7.7.3" }, "peerDependencies": { "react": "*", "react-native": "*", "react-native-worklets": ">=0.7.0" } }, "sha512-/NcHnZMyOvsD/wYXug/YqSKw90P9edN0kEPL5lP4PFf1aQ4F1V7MKe/E0tvfkXKIajy3Qocp5EiEnlcrK/+BZg=="],
 
