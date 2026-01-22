@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { StorageService } from '@/lib/storage';
 import { STORAGE_KEYS } from '@/constants/storage-keys';
+import { StorageService } from '@/services/storage';
+import { create } from 'zustand';
 
 type User = any;
 

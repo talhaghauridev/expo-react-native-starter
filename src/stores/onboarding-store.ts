@@ -1,5 +1,5 @@
 import { STORAGE_KEYS } from '@/constants/storage-keys';
-import { StorageService } from '@/lib/storage';
+import { StorageService } from '@/services/storage';
 import { create } from 'zustand';
 
 interface OnboardingState {

@@ -1,5 +1,5 @@
 import { IS_PROD } from '@/constants/environment';
-import { storage } from '@/lib/storage';
+import { storage } from '@/services/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StateStorage, createJSONStorage as createZustandStorage } from 'zustand/middleware';
 
