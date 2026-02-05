@@ -11,11 +11,11 @@ interface AuthState {
   isLoading: boolean;
   isInitialized: boolean;
   error: string | null;
-  initializeAuth: () => Promise<void>;
-  setCredentials: (user: User, token: string) => Promise<void>;
-  setUser: (user: User) => Promise<void>;
-  setToken: (token: string) => Promise<void>;
-  logout: () => Promise<void>;
+  initializeAuth: () => void;
+  setCredentials: (user: User, token: string) => void;
+  setUser: (user: User) => void;
+  setToken: (token: string) => void;
+  logout: () => void;
 }
 
 const initialValues = {
@@ -30,13 +30,11 @@ const initialValues = {
 export const useAuthStore = create<AuthState>((set) => ({
   ...initialValues,
 
-  initializeAuth: async () => {
+  initializeAuth: () => {
     set({ isLoading: true, isInitialized: false });
     try {
-      const [user, token] = await Promise.all([
-        StorageService.getObject<User>(STORAGE_KEYS.AUTH.USER_INFO),
-        StorageService.getItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN),
-      ]);
+      const user = StorageService.getObject(STORAGE_KEYS.AUTH.USER_INFO);
+      const token = StorageService.getItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN);
 
       if (user && token) {
         set({
@@ -63,7 +61,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  setCredentials: async (user, token) => {
+  setCredentials: (user, token) => {
     set({
       user,
       accessToken: token,
@@ -71,38 +69,33 @@ export const useAuthStore = create<AuthState>((set) => ({
       error: null,
     });
 
-    await Promise.all([
-      StorageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user),
-      StorageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token),
-    ]);
+    StorageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
+    StorageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
   },
 
-  setUser: async (user) => {
+  setUser: (user) => {
     set({ user, isAuthenticated: true, error: null });
-    await StorageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
+    StorageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
   },
 
-  setToken: async (token) => {
+  setToken: (token) => {
     set({ accessToken: token, error: null });
-    await StorageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
+    StorageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
   },
 
-  logout: async () => {
+  logout: () => {
     try {
       set((state) => ({ ...state, isLoading: true }));
 
-      await Promise.all([
-        StorageService.removeItem(STORAGE_KEYS.AUTH.USER_INFO),
+      (StorageService.removeItem(STORAGE_KEYS.AUTH.USER_INFO),
         StorageService.removeItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN),
-      ]);
-
-      set({
-        user: null,
-        accessToken: null,
-        isAuthenticated: false,
-        error: null,
-        isLoading: false,
-      });
+        set({
+          user: null,
+          accessToken: null,
+          isAuthenticated: false,
+          error: null,
+          isLoading: false,
+        }));
     } catch (error) {
       set({ error: 'Failed to logout' });
     }

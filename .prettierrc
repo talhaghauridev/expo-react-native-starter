@@ -7,7 +7,5 @@
   "bracketSameLine": true,
   "singleAttributePerLine": true,
   "endOfLine": "lf",
-  "plugins": [
-    "prettier-plugin-tailwindcss"
-  ]
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

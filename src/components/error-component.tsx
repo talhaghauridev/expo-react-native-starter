@@ -1,6 +1,6 @@
+import { Feather } from '@expo/vector-icons';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Animated, Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import { Button } from './ui/button';
 import { Text } from './ui/text';
 

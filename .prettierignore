@@ -36,7 +36,6 @@ pnpm-lock.yaml
 *.lock
 
 # IDE/Editor files
-.vscode/
 .idea/
 
 # OS generated files
@@ -59,7 +58,3 @@ coverage/
 # Cache directories
 .cache/
 .parcel-cache/
-
-# Prettier files
-.prettierrc
-.prettierignore

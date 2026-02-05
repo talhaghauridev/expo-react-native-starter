@@ -7,9 +7,9 @@ interface OnboardingState {
   isInitialized: boolean;
   hasCompletedOnboarding: boolean;
 
-  initializeOnboarding: () => Promise<void>;
-  completeOnboarding: () => Promise<void>;
-  resetOnboarding: () => Promise<void>;
+  initializeOnboarding: () => void;
+  completeOnboarding: () => void;
+  resetOnboarding: () => void;
 }
 
 const initialState = {
@@ -21,11 +21,11 @@ const initialState = {
 export const useOnboardingStore = create<OnboardingState>((set) => ({
   ...initialState,
 
-  initializeOnboarding: async () => {
+  initializeOnboarding: () => {
     try {
       set({ isLoading: true, isInitialized: false });
 
-      const completedStatus = await StorageService.getItem(STORAGE_KEYS.ONBOARDING.COMPLETED);
+      const completedStatus = StorageService.getItem(STORAGE_KEYS.ONBOARDING.COMPLETED);
 
       set({
         isLoading: false,
@@ -42,18 +42,18 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
     }
   },
 
-  completeOnboarding: async () => {
+  completeOnboarding: () => {
     try {
-      await StorageService.setItem(STORAGE_KEYS.ONBOARDING.COMPLETED, 'true');
+      StorageService.setItem(STORAGE_KEYS.ONBOARDING.COMPLETED, 'true');
       set({ hasCompletedOnboarding: true });
     } catch (error) {
       console.error('Failed to complete onboarding:', error);
     }
   },
 
-  resetOnboarding: async () => {
+  resetOnboarding: () => {
     try {
-      await StorageService.removeItem(STORAGE_KEYS.ONBOARDING.COMPLETED);
+      StorageService.removeItem(STORAGE_KEYS.ONBOARDING.COMPLETED);
       set({ hasCompletedOnboarding: false });
     } catch (error) {
       console.error('Failed to reset onboarding:', error);
