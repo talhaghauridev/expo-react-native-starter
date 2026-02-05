@@ -26,6 +26,7 @@ onlineManager.setEventListener((setOnline) => {
 function InitialLayout() {
   const { isFullyLoaded } = useAppInitialize();
   const { isAuthenticated } = useAuthStore();
+
   if (!isFullyLoaded) {
     return null;
   }
