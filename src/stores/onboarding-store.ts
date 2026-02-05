@@ -1,5 +1,5 @@
 import { STORAGE_KEYS } from '@/constants/storage-keys';
-import { StorageService } from '@/services/storage';
+import { storageService } from '@/services/storage';
 import { create } from 'zustand';
 
 interface OnboardingState {
@@ -25,7 +25,7 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
     try {
       set({ isLoading: true, isInitialized: false });
 
-      const completedStatus = StorageService.getItem(STORAGE_KEYS.ONBOARDING.COMPLETED);
+      const completedStatus = storageService.getItem(STORAGE_KEYS.ONBOARDING.COMPLETED);
 
       set({
         isLoading: false,
@@ -44,7 +44,7 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
 
   completeOnboarding: () => {
     try {
-      StorageService.setItem(STORAGE_KEYS.ONBOARDING.COMPLETED, 'true');
+      storageService.setItem(STORAGE_KEYS.ONBOARDING.COMPLETED, 'true');
       set({ hasCompletedOnboarding: true });
     } catch (error) {
       console.error('Failed to complete onboarding:', error);
@@ -53,7 +53,7 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
 
   resetOnboarding: () => {
     try {
-      StorageService.removeItem(STORAGE_KEYS.ONBOARDING.COMPLETED);
+      storageService.removeItem(STORAGE_KEYS.ONBOARDING.COMPLETED);
       set({ hasCompletedOnboarding: false });
     } catch (error) {
       console.error('Failed to reset onboarding:', error);

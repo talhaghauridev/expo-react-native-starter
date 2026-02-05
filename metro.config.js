@@ -15,7 +15,9 @@ config.resolver = {
 };
 
 config.resolver.resolveRequest = (context, moduleName, platform) => {
-  if (platform === 'web' && moduleName.startsWith('react-native-pager-view')) {
+  const nativeModules = ['react-native-pager-view'];
+
+  if (platform === 'web' && nativeModules.includes(moduleName)) {
     return {
       type: 'empty',
     };

@@ -2,6 +2,7 @@ import { env } from '@/env';
 import { getDevApiUrl } from '@/utils/api-utils';
 
 export const API_BASE_URL = getDevApiUrl(env.EXPO_PUBLIC_API_URL);
+
 export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login',

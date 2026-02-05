@@ -1,6 +1,6 @@
 import { API_BASE_URL } from '@/constants/api-endpoints';
 import { STORAGE_KEYS } from '@/constants/storage-keys';
-import { StorageService } from '@/services/storage';
+import { storageService } from '@/services/storage';
 import axiosClient from 'axios';
 import { Platform } from 'react-native';
 
@@ -12,7 +12,7 @@ axios.interceptors.request.use(
   (config) => {
     try {
       config.headers['X-Client-Type'] = Platform.OS;
-      const token = StorageService.getItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN);
+      const token = storageService.getItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN);
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

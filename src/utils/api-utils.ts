@@ -1,7 +1,7 @@
+import { IS_DEV } from '@/constants/environment';
 import * as Constants from 'expo-constants';
 import { Platform } from 'react-native';
 
-export const isDevelopment = __DEV__;
 export const getDevApiUrl = (devApiUrl: string): string => {
   if (!devApiUrl || devApiUrl.trim() === '') return devApiUrl;
 
@@ -11,7 +11,7 @@ export const getDevApiUrl = (devApiUrl: string): string => {
     return url;
   }
 
-  if (isDevelopment) {
+  if (IS_DEV) {
     try {
       if (Platform.OS === 'web') {
         return url;
@@ -45,6 +45,27 @@ export const createUrlWithQuery = (baseUrl: string, params?: Record<string, any>
   const queryString = buildQueryString(params);
   return queryString ? `${baseUrl}?${queryString}` : baseUrl;
 };
+
+type Endpoints = { [K: string]: string | Endpoints };
+
+export function defineEndpoints<T extends Endpoints>(
+  endpoints: T,
+  options?: { baseUrl?: string }
+): T {
+  const { baseUrl } = options ?? {};
+  if (!baseUrl) return endpoints;
+
+  const apply = (obj: Endpoints): Endpoints => {
+    const result: Endpoints = {};
+    for (const key in obj) {
+      const value = obj[key];
+      result[key] = typeof value === 'string' ? `${baseUrl}${value}` : apply(value);
+    }
+    return result;
+  };
+
+  return apply(endpoints) as T;
+}
 
 export const tryCatchWrapper = <T, Args extends any[]>(fn: (...args: Args) => Promise<T>) => {
   return async (...args: Args): Promise<T> => {

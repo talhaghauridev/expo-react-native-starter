@@ -2,7 +2,7 @@ import { createMMKV } from 'react-native-mmkv';
 
 const mmkvStorage = createMMKV();
 
-export const StorageService = {
+export const storageService = {
   setItem: (key: string, value: string) => {
     mmkvStorage.set(key, value);
   },
@@ -18,25 +18,22 @@ export const StorageService = {
 
   getObject: (key: string) => {
     try {
-      let jsonValue: string | null | undefined;
-
-      jsonValue = mmkvStorage.getString(key);
-
+      const jsonValue = mmkvStorage.getString(key);
       return jsonValue ? JSON.parse(jsonValue) : null;
     } catch {
       return null;
     }
   },
 
-  removeItem: async (key: string): Promise<void> => {
+  removeItem: (key: string) => {
     mmkvStorage.remove(key);
   },
 
-  clear: async (): Promise<void> => {
+  clear: () => {
     mmkvStorage.clearAll();
   },
 
-  getAllKeys: async (): Promise<string[]> => {
+  getAllKeys: (): string[] => {
     return mmkvStorage.getAllKeys();
   },
 

@@ -1,5 +1,5 @@
 import { STORAGE_KEYS } from '@/constants/storage-keys';
-import { StorageService } from '@/services/storage';
+import { storageService } from '@/services/storage';
 import { create } from 'zustand';
 
 type User = any;
@@ -33,8 +33,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   initializeAuth: () => {
     set({ isLoading: true, isInitialized: false });
     try {
-      const user = StorageService.getObject(STORAGE_KEYS.AUTH.USER_INFO);
-      const token = StorageService.getItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN);
+      const user = storageService.getObject(STORAGE_KEYS.AUTH.USER_INFO);
+      const token = storageService.getItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN);
 
       if (user && token) {
         set({
@@ -69,33 +69,33 @@ export const useAuthStore = create<AuthState>((set) => ({
       error: null,
     });
 
-    StorageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
-    StorageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
+    storageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
+    storageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
   },
 
   setUser: (user) => {
     set({ user, isAuthenticated: true, error: null });
-    StorageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
+    storageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
   },
 
   setToken: (token) => {
     set({ accessToken: token, error: null });
-    StorageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
+    storageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
   },
 
   logout: () => {
     try {
       set((state) => ({ ...state, isLoading: true }));
 
-      (StorageService.removeItem(STORAGE_KEYS.AUTH.USER_INFO),
-        StorageService.removeItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN),
-        set({
-          user: null,
-          accessToken: null,
-          isAuthenticated: false,
-          error: null,
-          isLoading: false,
-        }));
+      storageService.removeItem(STORAGE_KEYS.AUTH.USER_INFO);
+      storageService.removeItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN);
+      set({
+        user: null,
+        accessToken: null,
+        isAuthenticated: false,
+        error: null,
+        isLoading: false,
+      });
     } catch (error) {
       set({ error: 'Failed to logout' });
     }
