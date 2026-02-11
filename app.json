@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "expo-react-native-starter",
-    "slug": "expo-react-native-starter",
+    "name": "reactnativestarter",
+    "slug": "reactnativestarter",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "reactnativetemplate",
+    "scheme": "reactnativestarter",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.reactnativestarter"
     },
     "web": {
       "output": "static",
