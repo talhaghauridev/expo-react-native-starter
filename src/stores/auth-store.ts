@@ -1,8 +1,7 @@
 import { STORAGE_KEYS } from '@/constants/storage-keys';
 import { storageService } from '@/services/storage';
+import { User } from '@/types/users';
 import { create } from 'zustand';
-
-type User = any;
 
 interface AuthState {
   user: User | null;
@@ -12,9 +11,16 @@ interface AuthState {
   isInitialized: boolean;
   error: string | null;
   initializeAuth: () => void;
-  setCredentials: (user: User, token: string) => void;
+  setCredentials: (user: User, accessToken: string, refreshToken: string) => void;
   setUser: (user: User) => void;
-  setToken: (token: string) => void;
+  setToken: ({
+    access_token,
+    refresh_token,
+  }: {
+    access_token: string;
+    refresh_token: string;
+  }) => void;
+
   logout: () => void;
 }
 
@@ -53,6 +59,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         });
       }
     } catch (error) {
+      console.error('❌ AUTH INITIALIZATION ERROR:', error);
       set({
         isLoading: false,
         isInitialized: true,
@@ -61,26 +68,26 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  setCredentials: (user, token) => {
+  setCredentials: (user, accessToken, refreshToken) => {
     set({
       user,
-      accessToken: token,
+      accessToken,
       isAuthenticated: true,
       error: null,
     });
-
     storageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
-    storageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
+    storageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, accessToken);
+    storageService.setItem(STORAGE_KEYS.AUTH.REFRESH_TOKEN, refreshToken);
   },
 
   setUser: (user) => {
     set({ user, isAuthenticated: true, error: null });
     storageService.setObject(STORAGE_KEYS.AUTH.USER_INFO, user);
   },
-
-  setToken: (token) => {
-    set({ accessToken: token, error: null });
-    storageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, token);
+  setToken: ({ access_token, refresh_token }) => {
+    set({ accessToken: access_token, error: null });
+    storageService.setItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN, access_token);
+    storageService.setItem(STORAGE_KEYS.AUTH.REFRESH_TOKEN, refresh_token);
   },
 
   logout: () => {
@@ -89,15 +96,18 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       storageService.removeItem(STORAGE_KEYS.AUTH.USER_INFO);
       storageService.removeItem(STORAGE_KEYS.AUTH.ACCESS_TOKEN);
+      storageService.removeItem(STORAGE_KEYS.AUTH.REFRESH_TOKEN);
       set({
         user: null,
         accessToken: null,
         isAuthenticated: false,
-        error: null,
         isLoading: false,
+        isInitialized: true,
+        error: null,
       });
     } catch (error) {
-      set({ error: 'Failed to logout' });
+      console.error('❌ LOGOUT ERROR:', error);
+      set({ error: 'Failed to logout', isLoading: false });
     }
   },
 }));

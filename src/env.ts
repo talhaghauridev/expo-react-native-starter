@@ -1,11 +1,13 @@
 import { z } from 'zod';
 
 const envSchema = z.object({
-  EXPO_PUBLIC_API_URL: z.string(),
+  EXPO_PUBLIC_API_URL: z.url().nonempty(),
+  EXPO_PUBLIC_GOOGLE_CLIENT_ID: z.string().nonempty(),
 });
 
 const _env = {
   EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL,
+  EXPO_PUBLIC_GOOGLE_CLIENT_ID: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID,
 };
 
 const parsedEnv = envSchema.safeParse(_env);

@@ -1,0 +1,7 @@
+1. Add other required things add on this files and folder
+2. Create Simple and Professional Onboarding Screen 
+3. Setup Google Auth step 
+4. Create Good and minimal input design 
+5. Create Login and Register Screen 
+6. Create Verify Email Screen
+7. Create Forgot Password and Verfiy Reset Otp and Reset Password 

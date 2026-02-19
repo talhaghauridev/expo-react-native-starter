@@ -41,7 +41,7 @@ function InitialLayout() {
               options={{ headerShown: false }}
             />
           </Stack.Protected>
-
+          <Stack.Screen name="(screens)" />
           <Stack.Protected guard={!isAuthenticated}>
             <JsStack.Screen
               name="(auth)"

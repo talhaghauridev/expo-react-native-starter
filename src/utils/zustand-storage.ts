@@ -1,6 +1,4 @@
-import { IS_PROD } from '@/constants/environment';
 import { storage } from '@/services/storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StateStorage, createJSONStorage as createZustandStorage } from 'zustand/middleware';
 
 export const mmkvStorage: StateStorage = {
@@ -16,6 +14,6 @@ export const mmkvStorage: StateStorage = {
   },
 };
 
-const zustandStorage = createZustandStorage(() => (IS_PROD ? mmkvStorage : AsyncStorage));
+const zustandStorage = createZustandStorage(() => mmkvStorage);
 
 export default zustandStorage;
